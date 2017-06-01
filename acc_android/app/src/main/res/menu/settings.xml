@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <!--
+    <item
+        android:id="@+id/menu_settings"
+        ic_menu_preferences=""
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="Titulo Settings"
+        android:icon="@android:drawable/ic_menu_preferences"/>
+    -->
+
+    <item
+        android:id="@+id/menu_settings"
+        android:orderInCategory="100"
+        android:title="Settings"
+        android:icon="@android:drawable/ic_menu_preferences"/>
+
+</menu>

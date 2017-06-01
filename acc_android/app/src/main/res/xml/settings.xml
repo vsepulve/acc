@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="Threshold Parameters" >
+        <EditTextPreference
+            android:title="Cte. Threshold Value"
+            android:summary="Description 1A"
+            android:key="cteThresholdValue"
+            android:inputType="number"
+            android:text="100"
+            android:hint="100" />
+
+        <EditTextPreference
+            android:title="Adapt. Threshold Blocksize"
+            android:summary="Description 1B"
+            android:key="thresholdBlocksize"
+            android:inputType="number"
+            android:text="5"
+            android:hint="5"
+            android:defaultValue="5" />
+
+        <EditTextPreference
+            android:title="Adapt. Threshold C"
+            android:summary="Description 1C"
+            android:key="thresholdCte"
+            android:inputType="number"
+            android:text="1"
+            android:hint="1"
+            android:defaultValue="1" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="thresholdType"
+            android:summary="Descripcion 2"
+            android:title="Adapt. Threshold"
+            android:text="TEXTO"
+            android:hint="TEXTO" >
+        </CheckBoxPreference>
+
+    </PreferenceCategory>
+
+    <!--
+    <PreferenceCategory android:title="Titulo 2" >
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="prefSendReport"
+            android:summary="Descripcion 2"
+            android:title="Titulo 2 - Subtitulo"
+            android:text="TEXTO"
+            android:hint="TEXTO" >
+        </CheckBoxPreference>
+    </PreferenceCategory>
+    -->
+
+</PreferenceScreen>
