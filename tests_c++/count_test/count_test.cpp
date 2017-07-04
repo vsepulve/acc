@@ -45,23 +45,28 @@ int main(int argc, char** argv ){
 	
 	namedWindow("Display Image", WINDOW_AUTOSIZE );
 	
-	// reads image from file
+	// Cargar imagen de archivo
 	Mat src = imread(original_name, CV_LOAD_IMAGE_COLOR); 
 	imshow("Display Image", src);
 	waitKey(0);
 	
-	// converts image from rgb(src) to gray level (grey)
+	// Convertir a gris
 	cvtColor(src, grey, CV_BGR2GRAY);
 	imshow("Display Image", grey);
 	waitKey(0);
 	
-	// Tresholds image with level = 40 from gray level(grey) to binary (bin)
+	// Deteccion de bordes con un threshold (cte o adaptativo gaussiano)
+	// Ojo que los parametros del filtro (11 y 3) son mas o menos arbitrarios (11 es el largo de la ventana)
 //	threshold(grey, bin, 40, 255, THRESH_BINARY);
 	adaptiveThreshold(grey, bin, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY, 11, 3);
 	imshow("Display Image", bin);
+	
+	// Guardo la imagen binaria en un archivo
+	imwrite(bin_name, bin);
 	waitKey(0);
 	
-	// finds contours on bin image
+	// Busqueda de figuras en la imagen binaria
+	// Notar que esta funcion modifica la imagen mientras escanea los pixeles
 //	findContours(bin, contours, hierarchy, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_NONE );
 	findContours(bin, contours, hierarchy, RETR_LIST, CHAIN_APPROX_NONE );
 	
@@ -69,39 +74,23 @@ int main(int argc, char** argv ){
 	
 	unsigned int n = 0;
 	
-	Scalar color(255, 255, 255);
-	// iterate through each contour. 
+	// Iterar por figura para escoger algunas y marcarlas 
 	for( int i = 0; i< contours.size(); i++ ){
-		// if counter area > 100 pixel draw it on ero which is new image variable
+		// Solo considero imagenes de una cierta area minima (que puede ser un % del area total o algo similar)
+		// Notar que aqui tambien se puede comparar area y perimetro (por ejemplo) para filtrar por forma
 		if( (contourArea(contours[i], false)) > 400 ){
-			//Draw contours on itself as filled
+			// Una opcion es dibujar el poligono en la imagen binaria
 //			drawContours( bin, contours, i , color, CV_FILLED, 8, hierarchy );
+			// Otra opcion es marcarlas en la imagen original (con un rectangulo, marca en el centroide o lo que sea)
 			bounding_rect = boundingRect(contours[i]);
-//			rectangle(src, bounding_rect, Scalar(0, 255, 0), 3, 8, 0);
+			// El Scalar define un color aleatorio
 			rectangle(src, bounding_rect, Scalar(rand()%256, rand()%256, rand()%256), 3, 8, 0);
 			++n;
 		}
 	}
-	cout<<"conados: "<<n<<"\n";
+	cout<<"Contados: "<<n<<" de "<<contours.size()<<"\n";
 	
-	imshow("Display Image", bin);
-	waitKey(0);
-	
-//	findContours( bin, contours, hierarchy, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_NONE );
-//	findContours(bin, contours, hierarchy, RETR_LIST, CHAIN_APPROX_NONE );
-//	
-//	// iterate through each contour.
-//	for( int i = 0; i < contours.size(); i++ ){
-//		//Bound and Draw rectangle each object which detected at the end on src(original image)
-//		bounding_rect = boundingRect(contours[i]);
-//		rectangle(src, bounding_rect, Scalar(0, 255, 0), 3, 8, 0);  
-//	}
-	
-	cout<<"contours.size(): "<<contours.size()<<"\n";
-	
-//	namedWindow("Binary", CV_WINDOW_NORMAL);
 	imshow("Display Image", src);
-//	cout<<contours.size()<<"\n";
 	waitKey(0);
 	return 0;
 	
